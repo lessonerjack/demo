@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Class-Path: tomcat-embed-el-8.5.32.jar hibernate-validator-6.0.11.Fina
+ l.jar protobuf-java-2.6.0.jar mysql-connector-java-8.0.11.jar classma
+ te-1.3.4.jar jackson-datatype-jsr310-2.9.6.jar jackson-module-paramet
+ er-names-2.9.6.jar spring-jdbc-5.0.8.RELEASE.jar spring-core-5.0.8.RE
+ LEASE.jar validation-api-2.0.1.Final.jar jboss-logging-3.3.2.Final.ja
+ r spring-jcl-5.0.8.RELEASE.jar tomcat-embed-core-8.5.32.jar tomcat-em
+ bed-websocket-8.5.32.jar spring-boot-starter-jdbc-2.0.4.RELEASE.jar s
+ nakeyaml-1.19.jar spring-expression-5.0.8.RELEASE.jar jackson-core-2.
+ 9.6.jar HikariCP-2.7.9.jar spring-boot-starter-web-2.0.4.RELEASE.jar 
+ spring-web-5.0.8.RELEASE.jar log4j-to-slf4j-2.10.0.jar spring-boot-st
+ arter-2.0.4.RELEASE.jar spring-boot-autoconfigure-2.0.4.RELEASE.jar m
+ ybatis-3.4.6.jar mybatis-spring-1.3.2.jar spring-boot-starter-tomcat-
+ 2.0.4.RELEASE.jar spring-boot-2.0.4.RELEASE.jar mybatis-spring-boot-a
+ utoconfigure-1.3.2.jar logback-core-1.2.3.jar logback-classic-1.2.3.j
+ ar jackson-annotations-2.9.0.jar jackson-databind-2.9.6.jar jul-to-sl
+ f4j-1.7.25.jar spring-beans-5.0.8.RELEASE.jar spring-context-5.0.8.RE
+ LEASE.jar slf4j-api-1.7.25.jar jackson-datatype-jdk8-2.9.6.jar spring
+ -boot-starter-json-2.0.4.RELEASE.jar mybatis-spring-boot-starter-1.3.
+ 2.jar spring-tx-5.0.8.RELEASE.jar log4j-api-2.10.0.jar spring-webmvc-
+ 5.0.8.RELEASE.jar spring-boot-starter-logging-2.0.4.RELEASE.jar sprin
+ g-aop-5.0.8.RELEASE.jar javax.annotation-api-1.3.2.jar
+Main-Class: com.denny.DemoApplication
+
