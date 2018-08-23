@@ -1,11 +1,16 @@
 package com.denny.algorithm;
 
+import com.sun.org.apache.xml.internal.security.utils.Base64;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
 import java.math.BigInteger;
 import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.security.spec.RSAPrivateKeySpec;
+import java.security.spec.RSAPublicKeySpec;
 
 /**
  * Description:RSA加密解密算法
@@ -23,17 +28,49 @@ public class RSAUtil {
         KeyPair keyPair = keyPairGen.generateKeyPair();
         RSAPublicKey aPublic = (RSAPublicKey)keyPair.getPublic();
         RSAPrivateKey aPrivate = (RSAPrivateKey)keyPair.getPrivate();
+        log.info("public Encoded:{}", Base64.encode(aPublic.getEncoded()));
+        log.info("private Encoded:{}",Base64.encode(aPrivate.getEncoded()));
         log.info("public mod:{}",aPublic.getModulus());
         log.info("public key:{}",aPublic.getPublicExponent());
         log.info("private mod:{}",aPrivate.getModulus());
         log.info("private key:{}",aPrivate.getPrivateExponent());
 
         // 获取公私钥n
-        BigInteger m = new BigInteger(mod);
+        BigInteger m = new BigInteger(mod,16);
         // 获取公钥e
-        BigInteger pubE = new BigInteger(publicE);
+        BigInteger pubE = new BigInteger(publicE,16);
         // 密文
-        BigInteger priE = new BigInteger(privateE);
+        BigInteger priE = new BigInteger(privateE,16);
+        log.info("mod:{}",m);
+        log.info("pube:{}",pubE);
+        log.info("prie:{}",priE);
+        RSAPublicKeySpec rsaPublicKeySpec = new RSAPublicKeySpec(m,pubE);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        PublicKey publicKey = keyFactory.generatePublic(rsaPublicKeySpec);
+        log.info("prie:{}",Base64.encode(publicKey.getEncoded()));
+
+        RSAPrivateKeySpec rsaPrivateKeySpec = new RSAPrivateKeySpec(m,priE);
+        PrivateKey privateKey = keyFactory.generatePrivate(rsaPrivateKeySpec);
+        String encrypt = encrypt("12344", publicKey);
+        decrypt(encrypt,privateKey);
+
+
+    }
+    public static String encrypt(String data,PublicKey publicKey) throws Exception {
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
+        cipher.init(Cipher.ENCRYPT_MODE,publicKey);
+        byte[] bytes = cipher.doFinal("123".getBytes());
+        return Base64.encode(bytes);
+    }
+
+    public static String decrypt(String data,PrivateKey privateKey) throws Exception {
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
+        cipher.init(Cipher.DECRYPT_MODE,privateKey);
+        byte[] bytes1 = cipher.doFinal(data.getBytes());
+        log.info("bytes:{}",Base64.encode(bytes1));
+        return Base64.encode(bytes1);
     }
 
 }
