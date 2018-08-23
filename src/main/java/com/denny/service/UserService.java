@@ -1,5 +1,8 @@
 package com.denny.service;
 
+import com.denny.model.User;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -8,4 +11,5 @@ import java.util.List;
 public interface UserService {
 
     public List findAll();
+    public List<User> selectModel(String name, String phone);
 }

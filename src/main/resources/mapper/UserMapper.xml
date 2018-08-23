@@ -6,5 +6,17 @@
         SELECT * FROM t_user;
     </select>
 
+    <select id="selectModel" resultType="com.denny.model.User">
+        SELECT  * FROM t_user
+        <where>
+            <if test="name != null">
+                user_name=#{name}
+            </if>
+            <if test='phone == "41531251"'>
+               AND phone=#{phone}
+            </if>
+        </where>
+    </select>
+
 </mapper>
 

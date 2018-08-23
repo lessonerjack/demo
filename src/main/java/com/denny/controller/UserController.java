@@ -18,4 +18,8 @@ public class UserController {
     public List getAll(){
         return userService.findAll();
     }
+    @GetMapping("/user")
+    public List getUser(String name,String phone){
+        return userService.selectModel(name, phone);
+    }
 }

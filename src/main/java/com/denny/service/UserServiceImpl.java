@@ -1,6 +1,7 @@
 package com.denny.service;
 
 import com.denny.mapper.UserMapper;
+import com.denny.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,5 +17,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List findAll() {
         return userMapper.findAll();
+    }
+
+    @Override
+    public List<User> selectModel(String name, String phone) {
+        return userMapper.selectModel(name, phone);
     }
 }

@@ -4,6 +4,7 @@ package com.denny.model;
  * Created by Administrator on 2018/8/16 0016.
  */
 public class User {
+
     private Integer user_id;
     private String  user_name;
     private String  password;
