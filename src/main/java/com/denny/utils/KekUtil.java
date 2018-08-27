@@ -165,8 +165,7 @@ public class KekUtil {
     }
 
     /**
-     * 构建填充内容
-     *
+     * 组建缺少的填充F
      * @param isPublicKey
      * @param key
      * @param plaintext
@@ -200,6 +199,12 @@ public class KekUtil {
         return pksc.toString();
     }
 
+    /**
+     * 构建pkcs11填充的明文
+     * @param key
+     * @param oddEven
+     * @return
+     */
     public static String buildContent(String key,String oddEven){
         //填充
         int plaintextLength = oddEven.length();

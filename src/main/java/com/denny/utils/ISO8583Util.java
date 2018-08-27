@@ -26,7 +26,7 @@ public class ISO8583Util {
         filedMap.put("FIELD060", "00000013003");//注意这个域是变长域!
         filedMap.put("FIELD063", "3031203030303130303032");//注意这个域是变长域!
 
-        String origin = getInitBitMap(filedMap);
+        String hexBitMap = getInitBitMap(filedMap);
         String str11 = (String) filedMap.get("FIELD011");
         String str41 = convertStringToHex((String) filedMap.get("FIELD041"));
         String str42 = convertStringToHex((String) filedMap.get("FIELD042"));
@@ -34,29 +34,17 @@ public class ISO8583Util {
         String str63 = filedMap.get("FIELD063").toString();
         int length60 =str60 .length();
         int length63 = str63.length()/2;
-        log.info("str41:{}",str41);
-        log.info("str41:{}",str42);
-        log.info("str60:{}",str60);
-        log.info("str63:{}",str63);
+        log.info("ASCII str41:{}",str41);
+        log.info("ASCII str42:{}",str42);
+        log.info("BCD str60:{}",str60);
+        log.info("BCD str63:{}",str63);
         log.info("length60:{},length:{}",length60,length63);
         StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(TPDU).append(header).append(msgId).append(origin).append(str11).append(str41).append(str42).append("00"+length60).append(str60+"0").append("00"+length63).append(str63);
+        stringBuffer.append(TPDU).append(header).append(msgId).append(hexBitMap).append(str11).append(str41).append(str42).append("00"+length60).append(str60+"0").append("00"+length63).append(str63);
         send ="00"+ Integer.toHexString(stringBuffer.length()/2)+stringBuffer.toString();
         log.info("send:{}",send);
         log.info("send length:{}",send.length());
         log.info("send length:{}",hexStringToByte("10"));
-
-//        System.out.println("Integer.toBinaryString(01)="+Integer.toBinaryString(01));
-//        System.out.println("Integer.toBinaryString(012)="+Integer.toBinaryString(012));
-//        System.out.println("Integer.toBinaryString(10)="+Integer.toBinaryString(10));
-//        System.out.println("Integer.toBinaryString(0xa)="+Integer.toBinaryString(0xa));
-//
-//        System.out.println("Integer.toOctalString(0x12)="+Integer.toOctalString(0x12));
-//        System.out.println("Integer.toOctalString(18)="+Integer.toOctalString(18));
-//
-//        System.out.println("Integer.toHexString(012)="+Integer.toHexString(012));
-        System.out.println("Integer.toHexString(10)="+convertHexToString("1000"));
-
 
     }
     public static String bytesToHexString(byte[] src){
@@ -99,7 +87,7 @@ public class ISO8583Util {
                 }
             }
         }
-        System.out.println(buffer);
+        log.info("binary bitmap:{}",buffer);
         StringBuffer bitmap = new StringBuffer();
         for (int i = 0; i < buffer.length() / 4; i++) {
             int binary = Integer.parseInt(buffer.substring(i * 4, i * 4 + 4), 2);
@@ -128,7 +116,7 @@ public class ISO8583Util {
 
             }
         }
-        System.out.println(bitmap);
+        log.info("hex bitmap:{}",bitmap);
         return bitmap.toString();
     }
 

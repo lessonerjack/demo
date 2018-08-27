@@ -1,6 +1,8 @@
 package com.denny.algorithm;
 
 import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -46,6 +48,7 @@ public class RSAUtils {
      */
     public static final String SIGNATURE_ALGORITHM = "MD5withRSA";
 
+
     /** *//**
      * 获取公钥的key
      */
@@ -55,7 +58,6 @@ public class RSAUtils {
      * 获取私钥的key
      */
     private static final String PRIVATE_KEY = "RSAPrivateKey";
-
     /** *//**
      * RSA最大加密明文大小
      */
@@ -210,7 +212,12 @@ public class RSAUtils {
         out.close();
         return decryptedData;
     }
-
+    public static void main(String[] str) throws Exception {
+        Map<String, Object> stringObjectMap = genKeyPair();
+        byte[] bytes = encryptByPublicKey("".getBytes(), getPublicKey(stringObjectMap));
+        byte[] private_keys = decryptByPrivateKey(bytes, getPrivateKey(stringObjectMap));
+        System.out.println(new String(private_keys));
+    }
     /** *//**
      * <p>
      * 公钥加密
