@@ -2,7 +2,6 @@ package com.denny.mapper;
 
 import com.denny.model.User;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 

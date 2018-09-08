@@ -214,9 +214,10 @@ public class RSAUtils {
     }
     public static void main(String[] str) throws Exception {
         Map<String, Object> stringObjectMap = genKeyPair();
-        byte[] bytes = encryptByPublicKey("".getBytes(), getPublicKey(stringObjectMap));
+        String s = "02FFFFFFFFFFFFFFFF17686742719498372975689326124872FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0030140410010101010101010101010101010101010408";
+        byte[] bytes = encryptByPublicKey(s.getBytes(), getPublicKey(stringObjectMap));
         byte[] private_keys = decryptByPrivateKey(bytes, getPrivateKey(stringObjectMap));
-        System.out.println(new String(private_keys));
+        System.out.println(new BigInteger(bytes).toString(16));
     }
     /** *//**
      * <p>

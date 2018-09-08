@@ -179,6 +179,7 @@ public class KekUtil {
         int paddingLength = keyLength - otherLength - plaintextLength;
         if (isPublicKey) {
             //公钥填充非0
+            pksc.append("02");
             for (int i = 0; i < 16; i++) {
                 pksc.append("F");
             }
@@ -192,6 +193,7 @@ public class KekUtil {
             }
         } else {
             //填充FF
+            pksc.append("01");
             for (int i = 0; i < paddingLength; i++) {
                 pksc.append("F");
             }
@@ -202,24 +204,24 @@ public class KekUtil {
     /**
      * 构建pkcs11填充的明文
      * @param key
-     * @param oddEven
+     * @param oddPlaintText
      * @return
      */
-    public static String buildContent(String key,String oddEven){
+    public static String buildContent(boolean isPublicKey,String key,String oddPlaintText){
         //填充
-        int plaintextLength = oddEven.length();
+        int plaintextLength = oddPlaintText.length();
         Integer finalDataLength;
         StringBuffer padding = new StringBuffer();
         finalDataLength = 8 + plaintextLength;
-        String pkcs11 = KekUtil.fillPkcs(true, key, oddEven);
+        String pkcs11 = KekUtil.fillPkcs(isPublicKey, key, oddPlaintText);
         padding.append("00");
-        padding.append("02");
+        //padding.append("02");
         padding.append(pkcs11);
         padding.append("00").append("30");
-        padding.append(Integer.toHexString(finalDataLength))
+        padding.append(Integer.toHexString(finalDataLength/2))
                 .append("04")
-                .append(Integer.toHexString(oddEven.length()))
-                .append(oddEven)
+                .append(Integer.toHexString(oddPlaintText.length()/2))
+                .append(oddPlaintText)
                 .append("0408");
         return padding.toString();
     }
