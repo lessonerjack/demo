@@ -1,14 +1,20 @@
 package com.denny.algorithm;
 
+import com.denny.utils.Constant;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
 import sun.misc.BASE64Encoder;
 
+import javax.crypto.*;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Map;
 
 /**
@@ -119,12 +125,48 @@ public class RSAUtilTest {
     @Test
     public void testKey(){
         try {
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-            keyPairGenerator.initialize(1024);
+/*            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+            keyPairGenerator.initialize(512);
             KeyPair keyPair = keyPairGenerator.generateKeyPair();
             RSAPrivateKey aPrivate = (RSAPrivateKey)keyPair.getPrivate();
-            log.info(new BASE64Encoder().encodeBuffer(aPrivate.getEncoded()) );
+            log.info(new BASE64Encoder().encodeBuffer(aPrivate.getEncoded()) );*/
+            //X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec("".getBytes());
+            byte[] bytes  = "01010101010101010101010101010101".getBytes("utf-8");
+            PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(bytes);
+            KeyFactory rsa = KeyFactory.getInstance("RSA");
+            RSAPrivateKey privateKey =(RSAPrivateKey) rsa.generatePrivate(pkcs8EncodedKeySpec);
+            log.info("mod:{}",privateKey.getModulus());
+            log.info("d:{}",privateKey.getPrivateExponent());
         } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void test3DES(){
+        try {
+            byte[] src = "6068C580B12E57BC6068C580B12E57BC".getBytes("utf-8");
+            byte[] keyByte = "13345779911334577991133457799113".getBytes(Constant.CHARSER_SET_UTF8);
+            String Algorithm = "DESede";
+            SecretKey key = new SecretKeySpec(keyByte, Algorithm);
+            Cipher c1 = Cipher.getInstance(Algorithm);
+            c1.init(Cipher.ENCRYPT_MODE,key);
+            log.info("加密结果:"+c1.doFinal(src));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
         }
     }

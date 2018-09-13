@@ -1,5 +1,6 @@
 package com.denny.algorithm;
 
+import com.denny.utils.Constant;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.crypto.Cipher;
@@ -88,7 +89,7 @@ public class RSAUtil {
     }
 
     public static byte[] encrypt(String content, PublicKey publicKey) throws Exception {
-        byte[] data = content.getBytes();
+        byte[] data = content.getBytes("utf-8");
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);
@@ -138,7 +139,7 @@ public class RSAUtil {
         }
         byte[] decryptedData = out.toByteArray();
         out.close();
-        return new String(decryptedData);
+        return new String(decryptedData,"utf-8");
     }
 
     /** */
@@ -264,14 +265,16 @@ public class RSAUtil {
         }
         byte[] decryptedData = out.toByteArray();
         out.close();
+
+
         return decryptedData;
     }
 
     public static void main(String[] str) throws Exception {
         Map<String, Object> stringObjectMap = init();
-        byte[] bytes = encryptByPublicKey("".getBytes(), getPublicKey(stringObjectMap));
+        byte[] bytes = encryptByPublicKey("".getBytes("utf-8"), getPublicKey(stringObjectMap));
         byte[] private_keys = decryptByPrivateKey(bytes, getPrivateKey(stringObjectMap));
-        System.out.println(new String(private_keys));
+        System.out.println(new String(private_keys, Constant.CHARSER_SET_UTF8));
     }
     /** */
     /**

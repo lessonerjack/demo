@@ -14,13 +14,14 @@ public class ClientSocket {
     public static void main(String args[]){
         try {
             Socket socket = new Socket();
-            socket.connect(new InetSocketAddress("127.0.0.1",9999),1000);
+            socket.connect(new InetSocketAddress("127.0.0.1",8005),2000);
             OutputStream outputStream = socket.getOutputStream();
             PrintWriter printWriter = new PrintWriter(outputStream);
             printWriter.write("你好，服务端，哈哈哈哈哈哈");
             printWriter.flush();
             socket.shutdownOutput();
-
+            //Thread.sleep(10000);
+            System.out.println("开始读数据了");
             InputStream inputStream = socket.getInputStream();
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);

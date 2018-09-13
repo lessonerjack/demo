@@ -33,7 +33,7 @@ public class Base64Utils {
      * @throws Exception
      */
     public static byte[] decode(String base64) throws Exception {
-        return Base64.decode(base64.getBytes());
+        return Base64.decode(base64.getBytes("utf-8"));
     }
 
     /** *//**
@@ -120,9 +120,9 @@ public class Base64Utils {
         InputStream in = new ByteArrayInputStream(bytes);
         File destFile = new File(filePath);
         if (!destFile.getParentFile().exists()) {
-            destFile.getParentFile().mkdirs();
+            boolean mkdirs = destFile.getParentFile().mkdirs();
         }
-        destFile.createNewFile();
+        boolean newFile = destFile.createNewFile();
         OutputStream out = new FileOutputStream(destFile);
         byte[] cache = new byte[CACHE_SIZE];
         int nRead = 0;
